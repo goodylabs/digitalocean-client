@@ -26,6 +26,8 @@ verify_if_installed_with_dot "tr" "/usr/bin/tr"
 
 echo ""
 
+DEBUG="${DEBUG:-false}"
+
 CAT=`which cat`
 CURL=`which curl`
 CUT=`which cut`
@@ -76,5 +78,6 @@ while IFS= read -r project_name; do
   echo "Project ${project_name}: ${total_costs} USD"
 done <<< "$project_names"
 
-${RM} -f ${JSON_FILE}
-${RM} -f ${INVOICES_JSON_FILE}
+if [ "x${DEBUG}" == "xfalse" ]; then
+  ${RM} -f ${INVOICES_JSON_FILE} ${JSON_FILE}
+fi
