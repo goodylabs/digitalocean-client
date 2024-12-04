@@ -69,7 +69,11 @@ JSON_FILE="invoice_${invoice_id}.json"
 $CURL -X GET -H "${CONTENT_TYPE_HEADER}" -H "${AUTHORIZATION_HEADER}" \
   "${DIGITALOCEAN_API_HOST}/v2/customers/my/invoices/${invoice_id}?per_page=${PER_PAGE}" > ${JSON_FILE}
 
+echo "JSON: `${CAT} ${JSON_FILE}`"
+
 project_names=`${CAT} ${JSON_FILE}| ${JQ} -c ".invoice_items[].project_name" | ${SORT} | ${UNIQ}`
+
+echo "Project names: ${project_names}"
 
 echo "Total costs per project from invoice: ${invoice_id}"
 
